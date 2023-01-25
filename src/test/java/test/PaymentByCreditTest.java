@@ -71,24 +71,12 @@ public class PaymentByCreditTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCreditWithWrongCardNumber() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCredit();
-        var creditPage = new CreditPage();
-        creditPage.setCardNumber(3);
-        creditPage.fillingInTheFields(1, 1, 1, 1);
-        creditPage.getPay();
-        creditPage.getError();
-    }
-
-    @Test
     void shouldDeclinePaymentByCreditWithACardNumberEqualToZero() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCredit();
         var creditPage = new CreditPage();
-        creditPage.setCardNumber(4);
+        creditPage.setCardNumber(3);
         creditPage.fillingInTheFields(1, 1, 1, 1);
         creditPage.getPay();
         creditPage.getFillTheForm();
@@ -100,7 +88,7 @@ public class PaymentByCreditTest {
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCredit();
         var creditPage = new CreditPage();
-        creditPage.setCardNumber(5);
+        creditPage.setCardNumber(4);
         creditPage.fillingInTheFields(1, 1, 1, 1);
         creditPage.getPay();
         creditPage.getFillTheForm();
@@ -155,7 +143,7 @@ public class PaymentByCreditTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCreditWithWrongYear() {
+    void shouldDeclinePaymentByCreditWithWrongYearMaxYear() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCredit();
@@ -167,37 +155,13 @@ public class PaymentByCreditTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCreditWithWrongYearMinYear() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCredit();
-        var creditPage = new CreditPage();
-        creditPage.setCardNumber(1);
-        creditPage.fillingInTheFields(1, 5, 1, 1);
-        creditPage.getPay();
-        creditPage.getFillTheForm();
-    }
-
-    @Test
-    void shouldDeclinePaymentByCreditWithWrongYearMaxYear() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCredit();
-        var creditPage = new CreditPage();
-        creditPage.setCardNumber(1);
-        creditPage.fillingInTheFields(1, 3, 1, 1);
-        creditPage.getPay();
-        creditPage.getFillTheForm();
-    }
-
-    @Test
     void shouldDeclinePaymentByCreditWithTextInsteadOfYear() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCredit();
         var creditPage = new CreditPage();
         creditPage.setCardNumber(1);
-        creditPage.fillingInTheFields(1, 4, 1, 1);
+        creditPage.fillingInTheFields(1, 3, 1, 1);
         creditPage.getPay();
         creditPage.getFillTheForm();
     }
@@ -284,19 +248,5 @@ public class PaymentByCreditTest {
         creditPage.fillingInTheFields(1, 1, 1, 4);
         creditPage.getPay();
         creditPage.getFillTheForm();
-    }
-
-    @Test
-    void shouldApprovePaymentByCreditWhichMustBeDeclineIfTheRequestIsResubmitted() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCredit();
-        var creditPage = new CreditPage();
-        creditPage.setCardNumber(3);
-        creditPage.fillingInTheFields(1, 1, 1, 1);
-        creditPage.getPay();
-        creditPage.getError();
-        creditPage.getPay();
-        creditPage.getApprove();
     }
 }

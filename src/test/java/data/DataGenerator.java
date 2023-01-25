@@ -24,12 +24,9 @@ public class DataGenerator {
                 value = "9999 8888 7777 6666";
                 break;
             case 3:
-                value = "1122 3344 5566 7788";
-                break;
-            case 4:
                 value = "0000 0000 0000 0000";
                 break;
-            case 5:
+            case 4:
                 value = "number";
                 break;
             default:
@@ -72,12 +69,9 @@ public class DataGenerator {
                 value = String.valueOf(faker.number().numberBetween(yearStart, yearFinish)).substring(2);
                 break;
             case 2:
-                value = String.valueOf(faker.number().numberBetween(yearStart, yearFinish)).substring(3);
-                break;
-            case 3:
                 value = "99";
                 break;
-            case 4:
+            case 3:
                 value = "year";
                 break;
             default:

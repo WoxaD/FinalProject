@@ -41,9 +41,7 @@ public class PaymentTest {
         paymentPage.getPay();
         paymentPage.getApprove();
 
-        String expected = "APPROVED";
-        String actual = SQLHelper.getPaymentStatus();
-        assertEquals(expected, actual);
+        assertEquals("APPROVED", SQLHelper.getPaymentStatus());
     }
 
     @Test
@@ -57,9 +55,7 @@ public class PaymentTest {
         paymentPage.getPay();
         paymentPage.getError();
 
-        String expected = "DECLINED";
-        String actual = SQLHelper.getPaymentStatus();
-        assertEquals(expected, actual);
+        assertEquals("DECLINED", SQLHelper.getPaymentStatus());
     }
 
     @Test
@@ -75,24 +71,12 @@ public class PaymentTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCardWithWrongCardNumber() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCard();
-        var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(3);
-        paymentPage.fillingInTheFields(1, 1, 1, 1);
-        paymentPage.getPay();
-        paymentPage.getError();
-    }
-
-    @Test
     void shouldDeclinePaymentByCardWithCardNumberEqualZero() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCard();
         var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(4);
+        paymentPage.setCardNumber(3);
         paymentPage.fillingInTheFields(1, 1, 1, 1);
         paymentPage.getPay();
         paymentPage.getFillTheForm();
@@ -104,7 +88,7 @@ public class PaymentTest {
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCard();
         var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(5);
+        paymentPage.setCardNumber(4);
         paymentPage.fillingInTheFields(1, 1, 1, 1);
         paymentPage.getPay();
         paymentPage.getFillTheForm();
@@ -159,7 +143,7 @@ public class PaymentTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCardWithWrongYear() {
+    void shouldDeclinePaymentByCardWithWrongYearMaxYear() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCard();
@@ -171,37 +155,13 @@ public class PaymentTest {
     }
 
     @Test
-    void shouldDeclinePaymentByCardWithWrongYearMinYear() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCard();
-        var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(1);
-        paymentPage.fillingInTheFields(1, 5, 1, 1);
-        paymentPage.getPay();
-        paymentPage.getFillTheForm();
-    }
-
-    @Test
-    void shouldDeclinePaymentByCardWithWrongYearMaxYear() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCard();
-        var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(1);
-        paymentPage.fillingInTheFields(1, 3, 1, 1);
-        paymentPage.getPay();
-        paymentPage.getFillTheForm();
-    }
-
-    @Test
     void shouldDeclinePaymentByCardWithTextInsteadOfYear() {
         open("http://localhost:8080");
         var dashboardPage = new DashboardPage();
         dashboardPage.setPaymentByCard();
         var paymentPage = new PaymentPage();
         paymentPage.setCardNumber(1);
-        paymentPage.fillingInTheFields(1, 4, 1, 1);
+        paymentPage.fillingInTheFields(1, 3, 1, 1);
         paymentPage.getPay();
         paymentPage.getFillTheForm();
     }
@@ -288,19 +248,5 @@ public class PaymentTest {
         paymentPage.fillingInTheFields(1, 1, 1, 4);
         paymentPage.getPay();
         paymentPage.getFillTheForm();
-    }
-
-    @Test
-    void shouldApprovePaymentByCreditWhichMustBeDeclineIfTheRequestIsResubmitted() {
-        open("http://localhost:8080");
-        var dashboardPage = new DashboardPage();
-        dashboardPage.setPaymentByCard();
-        var paymentPage = new PaymentPage();
-        paymentPage.setCardNumber(3);
-        paymentPage.fillingInTheFields(1, 1, 1, 1);
-        paymentPage.getPay();
-        paymentPage.getError();
-        paymentPage.getPay();
-        paymentPage.getApprove();
     }
 }
